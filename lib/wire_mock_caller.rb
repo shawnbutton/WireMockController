@@ -1,0 +1,2 @@
+class WireMockCaller
+end
