@@ -1,9 +1,23 @@
 require 'rspec'
 
-describe 'My behaviour' do
+describe 'WireMock Calls' do
 
-  it 'should do something' do
+  it 'should list mappings in json' do
 
-    true.should == false
-  end
+    wiremock = WireMockCaller.new
+
+    mappings = wiremock.getMappings
+
+
+    expect mappings
+
+
+
+
+
+
+    end
+
+
 end
+
