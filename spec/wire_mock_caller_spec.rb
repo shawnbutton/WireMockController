@@ -7,9 +7,20 @@ describe 'WireMock Calls' do
     wiremock = WireMockCaller.new
     mappings = wiremock.get_mappings
 
-    expect(mappings[0]['request']['url']).to eq('/api/json?pretty=true')
+    expect(mappings[0]['request']['url']).to eq('/testApi')
   end
 
+
+  it 'should all you to specify mapping' do
+    body = 'this is the body that will be returned by the call to wiremock'
+
+    wiremock = WireMockCaller.new
+    wiremock.create_mapping('/someurl', 'GET', body)
+
+    mappings = wiremock.get_mappings
+
+    expect(mappings[0]['request']['url']).to eq('/something')
+  end
 
 
 end
