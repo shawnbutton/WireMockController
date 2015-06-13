@@ -1,22 +1,15 @@
-require 'rspec'
+require_relative '../lib/wire_mock_caller'
+require 'spec_helper'
 
 describe 'WireMock Calls' do
 
-  it 'should list mappings in json' do
-
+  it 'should return mappings' do
     wiremock = WireMockCaller.new
+    mappings = wiremock.get_mappings
 
-    mappings = wiremock.getMappings
+    expect(mappings[0]['request']['url']).to eq('/api/json?pretty=true')
+  end
 
-
-    expect mappings
-
-
-
-
-
-
-    end
 
 
 end
