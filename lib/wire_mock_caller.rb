@@ -6,22 +6,22 @@ class WireMockCaller
   base_uri "http://localhost:9999/__admin"
 
   def get_mappings
-
     response = self.class.get("http://localhost:9999/__admin")
-
     response["mappings"]
-
   end
 
   def create_mapping(url, method, body)
-
-    mappingRequest = buildMappingRequest(body, method, url)
-
-    response = self.class.post("/mappings/new", body: mappingRequest.to_json)
-
+    mappingRequest = build_mapping_request(body, method, url)
+    self.class.post("/mappings/new", body: mappingRequest.to_json)
   end
 
-  def buildMappingRequest(body, method, url)
+  def reset_mappings
+    self.class.post("/mappings/reset")
+  end
+
+  private
+
+  def build_mapping_request(body, method, url)
     {
         request: {
             method: method,
@@ -36,11 +36,5 @@ class WireMockCaller
         }
     }
   end
-
-  def reset_mappings
-    response = self.class.post("/mappings/reset")
-
-  end
-
 
 end
