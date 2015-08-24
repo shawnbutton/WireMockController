@@ -3,19 +3,20 @@ require 'spec_helper'
 
 describe 'WireMock Integration Tests - Require running WireMock instance', :integration do
 
+  before :each do
+    @sut = WireMockCaller.new
+    @sut.reset_mappings
+  end
+
   it 'should allow you to specify mapping and get it back' do
-
-    wiremock = WireMockCaller.new
-
-    wiremock.reset_mappings
 
     body = 'this is the body that will be returned by the call to wiremock'
     get_method = 'GET'
     url = '/someurl'
 
-    wiremock.create_mapping(url, get_method, body)
+    @sut.create_mapping(url, get_method, body)
 
-    mappings = wiremock.get_mappings
+    mappings = @sut.get_mappings
 
     first_mapping = mappings[0]
 
@@ -30,13 +31,14 @@ describe 'WireMock Integration Tests - Require running WireMock instance', :inte
   end
 
   it 'should reset all mappings to default' do
-    wiremock = WireMockCaller.new
+    @sut.create_mapping("someurl", "GET", "some body")
 
-    wiremock.reset_mappings
+    @sut.reset_mappings
 
-    mappings = wiremock.get_mappings
+    mappings = @sut.get_mappings
 
-    expect(mappings[0]['request']['url']).to eq('/api/json?pretty=true')
+    default_mapping = '/api/json?pretty=true'
+    expect(mappings[0]['request']['url']).to eq(default_mapping)
 
   end
 
