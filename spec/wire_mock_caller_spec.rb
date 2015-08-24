@@ -8,6 +8,10 @@ describe 'WireMock Integration Tests - Require running WireMock instance', :inte
     @sut.reset_mappings
   end
 
+  after :each do
+    @sut.reset_mappings
+  end
+
   it 'should allow you to specify mapping and get it back' do
 
     body = 'this is the body that will be returned by the call to wiremock'
