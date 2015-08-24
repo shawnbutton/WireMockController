@@ -1,4 +1,3 @@
-require 'net/http'
 require 'json'
 require 'httparty'
 
@@ -14,46 +13,16 @@ class WireMockCaller
 
   end
 
-  def create_mapping_old(url, method, body)
+  def create_mapping(url, method, body)
 
-    response = self.class.post("/mappings/new",
-                               # body: {
-                               #     request: {
-                               #         method: "GET",
-                               #         url: "url"
-                               #     },
-                               #     response: {
-                               #         status: 200,
-                               #         body: body,
-                               #         headers: {
-                               #             :'Content-Type' => "text/plain" # have to use this notation because the dash in Content-Type is not a legal character in a ruby symbol
-                               #         }
-                               #     }
-                               # }
-                               body: '{
-    "request": {
-            "method": "GET",
-            "url": "/some/thing"
-    },
-    "response": {
-            "status": 200,
-            "body": "Hello world!",
-            "headers": {
-                    "Content-Type": "text/plain"
-            }
-    }
-}'
+    mappingRequest = buildMappingRequest(body, method, url)
 
-    )
-
-
-    puts response
+    response = self.class.post("/mappings/new", body: mappingRequest.to_json)
 
   end
 
-  def create_mapping(url, method, body)
-
-    mappingRequest = {
+  def buildMappingRequest(body, method, url)
+    {
         request: {
             method: method,
             url: url
@@ -66,28 +35,10 @@ class WireMockCaller
             }
         }
     }
+  end
 
-
-    response = self.class.post("/mappings/new",
-                               body: mappingRequest.to_json
-    # body: '{
-    # "request": {
-    #         "method": "GET",
-    #         "url": "/some/thing"
-    # },
-    # "response": {
-    #         "status": 200,
-    #         "body": "Hello world!",
-    #         "headers": {
-    #                 "Content-Type": "text/plain"
-    #         }
-    # }
-    # }'
-
-    )
-
-
-    puts response
+  def reset_mappings
+    response = self.class.post("/mappings/reset")
 
   end
 
