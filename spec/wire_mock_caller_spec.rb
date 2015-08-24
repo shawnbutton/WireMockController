@@ -1,7 +1,7 @@
 require_relative '../lib/wire_mock_caller'
 require 'spec_helper'
 
-describe 'WireMock Calls' do
+describe 'WireMock Integration Tests - Require running WireMock instance', :integration do
 
   it 'should return mappings' do
     wiremock = WireMockCaller.new
@@ -10,8 +10,7 @@ describe 'WireMock Calls' do
     expect(mappings[0]['request']['url']).to eq('/testApi')
   end
 
-
-  it 'should all you to specify mapping' do
+  it 'should allow you to specify mapping' do
     body = 'this is the body that will be returned by the call to wiremock'
 
     wiremock = WireMockCaller.new
@@ -19,7 +18,7 @@ describe 'WireMock Calls' do
 
     mappings = wiremock.get_mappings
 
-    expect(mappings[0]['request']['url']).to eq('/something')
+    expect(mappings[0]['request']['url']).to eq('/someurl')
   end
 
 

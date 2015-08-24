@@ -5,8 +5,7 @@ gemspec
 
 gem 'rspec', '~> 3.0.0'
 
-# gem 'rspec-core'
-
+gem 'httparty', '~> 0.13.5'
 
 
 
