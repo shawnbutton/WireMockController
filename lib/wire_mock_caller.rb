@@ -3,7 +3,10 @@ require 'httparty'
 
 class WireMockCaller
   include HTTParty
-  base_uri "http://localhost:9999/__admin"
+
+  def initialize(base_uri = "http://localhost:9999/__admin")
+    WireMockCaller.base_uri base_uri
+  end
 
   def get_mappings
     response = self.class.get("http://localhost:9999/__admin")
