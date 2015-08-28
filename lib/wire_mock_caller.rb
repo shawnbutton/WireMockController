@@ -9,7 +9,7 @@ class WireMockCaller
   end
 
   def get_mappings
-    response = self.class.get("http://localhost:9999/__admin")
+    response = self.class.get("")
     response["mappings"]
   end
 
