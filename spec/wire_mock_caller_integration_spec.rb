@@ -48,12 +48,11 @@ describe 'WireMock Integration Tests - Require running WireMock instance', :inte
 
   it 'should throw exception when you specify invalid wiremock uri' do
 
+    pending("test is ready but code not in place")
+
     @sut = WireMockCaller.new('http://someinvaliduri/')
 
-    @sut.get_mappings
-
-    default_mapping = '/api/json?pretty=true'
-    expect(mappings[0]['request']['url']).to eq(default_mapping)
+    expect(@sut.get_mappings).to raise_error
 
   end
 
