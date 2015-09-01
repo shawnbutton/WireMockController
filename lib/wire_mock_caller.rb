@@ -14,7 +14,7 @@ class WireMockCaller
   end
 
   def create_mapping(url, method, body)
-    mapping_request = build_mapping_request(body, method, url)
+    mapping_request = build_mapping_request(method, body, url)
     self.class.post("/mappings/new", body: mapping_request.to_json)
   end
 
@@ -24,11 +24,12 @@ class WireMockCaller
 
   private
 
-  def build_mapping_request(body, method, url)
+  def build_mapping_request(method, body, url)
+    url_or_url_pattern = "url"
     {
         request: {
             method: method,
-            url: url
+            url_or_url_pattern => url
         },
         response: {
             status: 200,
