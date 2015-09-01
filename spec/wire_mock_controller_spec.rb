@@ -6,13 +6,4 @@ describe WireMockController do
   end
 
 
-  it "should call wiremock for a default get request" do
-
-
-    WireMockCaller.new
-
-
-  end
-
-
 end

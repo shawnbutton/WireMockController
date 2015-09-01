@@ -7,13 +7,14 @@ describe 'WireMock Caller Tests' do
     @sut = WireMockCaller.new
   end
 
-  it 'should throw exception when you specify invalid wiremock uri' do
+  it 'should allow you to specify url_pattern when creating mapping' do
 
-    pending("code is not implemented")
+    pending
+    @sut.create_mapping("/test", :GET, "body")
 
-    @sut = WireMockCaller.new('http://someinvaliduri/')
 
-    expect { @sut.get_mappings }.to raise_exception
+    fail
+
 
   end
 
