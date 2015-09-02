@@ -25,11 +25,19 @@ describe WireMockBuilder do
     expect(mapping).to match(expected_structure)
   end
 
-  it 'should allow you to specify url_pattern when creating mapping' do
-    url_to_match = "/test/.*"
+  it 'should allow you to specify url when creating mapping' do
+    url_to_match = "/test"
     subject.url_matches(url_to_match)
 
     expect(request_mapping).to match(urlPattern: url_to_match)
+  end
+
+
+  it 'should allow you to specify url_pattern when creating mapping' do
+    url_to_match = "/test/.*"
+    subject.url_equal_to(url_to_match)
+
+    expect(request_mapping).to match(url: url_to_match)
   end
 
   it 'should allow you to specify body' do

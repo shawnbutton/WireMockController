@@ -17,12 +17,16 @@ class WireMockBuilder
 
   def url_matches(url_pattern)
     @mapping[:request].merge!(urlPattern: url_pattern)
-
     self
   end
 
   def then_return(body)
     @mapping[:response].merge!(body: body)
+    self
+  end
+
+  def url_equal_to(url)
+    @mapping[:request].merge!(url: url)
     self
   end
 
