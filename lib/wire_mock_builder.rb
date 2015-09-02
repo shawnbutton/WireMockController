@@ -2,6 +2,15 @@ class WireMockBuilder
 
   attr_reader :mapping
 
+  def initialize
+    @mapping = {
+        request: {
+        },
+        response: {
+        }
+    }
+  end
+
   def given_that
     self
   end
