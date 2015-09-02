@@ -1,19 +1,16 @@
 class WireMockBuilder
 
-  def initialize
-    puts "!!!!"
-  end
-
+  attr_reader :mapping
 
   def given_that
     self
   end
 
 
-  def uri_matches(uri_pattern)
-    uri_pattern.
+  def uri_matches(urlPattern)
+    @mapping = "urlPattern"
 
-        self
+    self
   end
 
 
@@ -21,8 +18,8 @@ class WireMockBuilder
     self
   end
 
-  def go
-
+  def mapping
+    @mapping
   end
 
 
