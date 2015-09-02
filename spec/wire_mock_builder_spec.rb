@@ -9,6 +9,10 @@ def request_mapping
   mapping[:request]
 end
 
+def response_mapping
+  mapping[:response]
+end
+
 describe WireMockBuilder do
 
   it 'should have request and reponse by default' do
@@ -29,10 +33,10 @@ describe WireMockBuilder do
   end
 
   it 'should allow you to specify body' do
-    pending
-    # .
-    # then_return("body")
-    fail
+    body = "this is some body"
+    subject.then_return(body)
+
+    expect(response_mapping).to match(body: body)
   end
 
 end
