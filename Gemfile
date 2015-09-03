@@ -7,5 +7,6 @@ gem 'rspec', '~> 3.0.0'
 
 gem 'httparty', '~> 0.13.5'
 
+gem 'simplecov'
 
 
