@@ -16,7 +16,14 @@ class WireMockBuilder
   end
 
   def url_matches(url_pattern)
-    @mapping[:request].merge!(urlPattern: url_pattern)
+    check_for_url_called_twice
+    request_mapping.merge!(urlPattern: url_pattern)
+    self
+  end
+
+  def url_equal_to(url)
+    check_for_url_called_twice
+    request_mapping.merge!(url: url)
     self
   end
 
@@ -25,9 +32,16 @@ class WireMockBuilder
     self
   end
 
-  def url_equal_to(url)
-    @mapping[:request].merge!(url: url)
-    self
+
+  private
+
+  def check_for_url_called_twice
+    raise 'should not specify url twice' if @url_set
+    @url_set = true
+  end
+
+  def request_mapping
+    @mapping[:request]
   end
 
 end

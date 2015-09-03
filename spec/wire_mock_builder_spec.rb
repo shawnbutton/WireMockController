@@ -26,12 +26,11 @@ describe WireMockBuilder do
   end
 
   it 'should allow you to specify url when creating mapping' do
-    url_to_match = "/test"
-    subject.url_matches(url_to_match)
+    url = "/test"
+    subject.url_matches(url)
 
-    expect(request_mapping).to match(urlPattern: url_to_match)
+    expect(request_mapping).to match(urlPattern: url)
   end
-
 
   it 'should allow you to specify url_pattern when creating mapping' do
     url_to_match = "/test/.*"
@@ -45,6 +44,26 @@ describe WireMockBuilder do
     subject.then_return(body)
 
     expect(response_mapping).to match(body: body)
+  end
+
+  it 'should raise an exception if url_equal_to and then url_matches are called' do
+    subject.url_equal_to("/someurl")
+    expect { subject.url_matches("/someurlpattern") }.to raise_exception
+  end
+
+  it 'should raise an exception if url_matches and then url_equal_to are called' do
+    subject.url_matches("/someurlpattern")
+    expect { subject.url_equal_to("/someurl") }.to raise_exception
+  end
+
+  it 'should raise an exception if url_matches is called twice' do
+    subject.url_matches("/someurlpattern")
+    expect { subject.url_matches("/somedifferentpattern") }.to raise_exception
+  end
+
+  it 'should raise an exception if url_equal_to is called twice' do
+    subject.url_equal_to("/someurl")
+    expect { subject.url_equal_to("/somedifferenturl") }.to raise_exception
   end
 
 end
