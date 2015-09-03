@@ -34,6 +34,12 @@ describe WireMockBuilder do
     expect(response_mapping).to match(body: body)
   end
 
+  it 'should allow you to specify GET method' do
+    subject.using_get
+
+    expect(request_mapping).to match(method: "GET")
+  end
+
   it 'should raise an exception if url_equal_to and then url_matches are called' do
     call_url_equal_to
     expect { call_url_matches }.to raise_exception

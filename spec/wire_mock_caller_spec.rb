@@ -7,16 +7,6 @@ describe 'WireMock Caller Tests' do
     @sut = WireMockCaller.new
   end
 
-  it 'should allow you to specify url_pattern when creating mapping' do
-
-    pending
-    @sut.create_mapping("/test", :GET, "body")
-
-
-    fail
-
-
-  end
 
 end
 

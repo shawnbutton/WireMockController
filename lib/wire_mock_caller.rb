@@ -13,9 +13,13 @@ class WireMockCaller
     response["mappings"]
   end
 
+  def register_mapping(mapping)
+    self.class.post("/mappings/new", body: mapping.to_json)
+  end
+
   def create_mapping(url, method, body)
-    mapping_request = build_mapping_request(method, body, url)
-    self.class.post("/mappings/new", body: mapping_request.to_json)
+    mapping = build_mapping_request(method, body, url)
+    register_mapping(mapping)
   end
 
   def reset_mappings

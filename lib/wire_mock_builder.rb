@@ -11,6 +11,11 @@ class WireMockBuilder
     }
   end
 
+  def using_get
+    request_mapping.merge!(method: "GET")
+    self
+  end
+
   def url_matches(url_pattern)
     check_for_url_called_twice
     request_mapping.merge!(urlPattern: url_pattern)
