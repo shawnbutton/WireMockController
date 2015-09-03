@@ -1,18 +1,6 @@
 require 'rspec'
 require 'wire_mock_builder'
 
-def mapping
-  subject.mapping
-end
-
-def request_mapping
-  mapping[:request]
-end
-
-def response_mapping
-  mapping[:response]
-end
-
 describe WireMockBuilder do
 
   it 'should have request and reponse by default' do
@@ -47,23 +35,44 @@ describe WireMockBuilder do
   end
 
   it 'should raise an exception if url_equal_to and then url_matches are called' do
-    subject.url_equal_to("/someurl")
-    expect { subject.url_matches("/someurlpattern") }.to raise_exception
+    call_url_equal_to
+    expect { call_url_matches }.to raise_exception
   end
 
   it 'should raise an exception if url_matches and then url_equal_to are called' do
-    subject.url_matches("/someurlpattern")
-    expect { subject.url_equal_to("/someurl") }.to raise_exception
+    call_url_matches
+    expect { call_url_equal_to }.to raise_exception
   end
 
   it 'should raise an exception if url_matches is called twice' do
-    subject.url_matches("/someurlpattern")
-    expect { subject.url_matches("/somedifferentpattern") }.to raise_exception
+    call_url_matches
+    expect { call_url_matches }.to raise_exception
   end
 
   it 'should raise an exception if url_equal_to is called twice' do
-    subject.url_equal_to("/someurl")
-    expect { subject.url_equal_to("/somedifferenturl") }.to raise_exception
+    call_url_equal_to
+    expect { call_url_equal_to }.to raise_exception
   end
 
+end
+
+
+def mapping
+  subject.mapping
+end
+
+def request_mapping
+  mapping[:request]
+end
+
+def response_mapping
+  mapping[:response]
+end
+
+def call_url_equal_to
+  subject.url_equal_to("/someurl")
+end
+
+def call_url_matches
+  subject.url_matches("/someurlpattern")
 end
