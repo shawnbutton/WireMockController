@@ -17,11 +17,13 @@ describe WireMock, :integration do
 
 
     url = "/testurl"
+    header_name = "header_name"
+    header_content = "header_content"
     subject.using_get.
         when_url_equal_to(url).
 
         then_return_body("body").
-        with_header(:header_name, :header_content).
+        with_header(header_name, header_content).
 
         create_mapping
 
@@ -40,7 +42,7 @@ describe WireMock, :integration do
 
     headers = response['headers']
 
-    expect(headers[:header_name]).to eq(:header_content)
+    expect(headers[header_name]).to eq(header_content)
 
 
   end

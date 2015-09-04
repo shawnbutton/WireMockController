@@ -17,6 +17,7 @@ class WireMockCaller
     self.class.post("/mappings/new", body: mapping.to_json)
   end
 
+  # TODO can delete this method, as now use builder to build the mapping
   def create_mapping(url, method, body)
     mapping = build_mapping_request(method, body, url)
     register_mapping(mapping)
