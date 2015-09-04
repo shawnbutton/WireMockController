@@ -1,9 +1,7 @@
-class WireMockBuilder
+module WireMockBuilder
 
-  attr_reader :mapping
-
-  def initialize
-    @mapping = {
+  def mapping
+    @mapping ||= {
         request: {
         },
         response: {
@@ -29,7 +27,7 @@ class WireMockBuilder
   end
 
   def then_return(body)
-    @mapping[:response].merge!(body: body)
+    mapping[:response].merge!(body: body)
     self
   end
 
@@ -42,7 +40,7 @@ class WireMockBuilder
   end
 
   def request_mapping
-    @mapping[:request]
+    mapping[:request]
   end
 
 end

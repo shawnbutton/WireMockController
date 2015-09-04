@@ -10,11 +10,9 @@ describe WireMock, :integration do
     wire_mock_caller = WireMockCaller.new
     wire_mock_caller.reset_mappings
 
-    wire_mock_builder = WireMockBuilder.new
 
     url = "/testurl"
     subject.given_that(
-        wire_mock_builder.
             using_get.
             url_equal_to(url).
             then_return("body")
