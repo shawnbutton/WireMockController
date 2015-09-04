@@ -69,7 +69,7 @@ describe WireMockBuilder do
     expect { call_url_equal_to }.to raise_exception
   end
 
-  it 'should allow you to specify headers' do
+  it 'should allow you to specify one header' do
     name = "header_name"
     content = "header_content"
     @subject.with_header(name, content)
@@ -77,6 +77,22 @@ describe WireMockBuilder do
     headers = response_mapping[:headers]
 
     expect(headers[name]).to eq(content)
+  end
+
+  it 'should allow you to specify multiple headers' do
+    name_1 = "first_header_name"
+    content_1 = "first_header_content"
+    name_2 = "second_header_name"
+    content_2 = "second_header_content"
+
+    @subject.with_header(name_1, content_1).
+        with_header(name_2, content_2)
+
+    headers = response_mapping[:headers]
+
+    expect(headers[name_1]).to eq(content_1)
+    expect(headers[name_2]).to eq(content_2)
+
   end
 
 

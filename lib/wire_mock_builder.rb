@@ -37,7 +37,9 @@ module WireMockBuilder
   end
 
   def with_header(header, content)
-    mapping[:response].merge!(headers: {})
+    unless mapping[:response][:headers]
+      mapping[:response].merge!(headers: {})
+    end
 
     mapping[:response][:headers].merge!(header.to_s => content)
 
