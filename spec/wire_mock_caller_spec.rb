@@ -3,9 +3,9 @@ require 'spec_helper'
 
 describe 'WireMock Caller Tests' do
 
-  before :each do
-    @sut = WireMockCaller.new
-  end
+  # before :each do
+  #   @sut = WireMockCaller.new
+  # end
 
 
 end
