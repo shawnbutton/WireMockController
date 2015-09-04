@@ -8,8 +8,8 @@ class WireMock
     @wiremock_caller = wiremock_caller
   end
 
-  def given_that(builder)
-    @wiremock_caller.register_mapping(builder.mapping)
+  def create_mapping()
+    @wiremock_caller.register_mapping(mapping)
   end
 
 

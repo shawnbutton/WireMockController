@@ -23,24 +23,25 @@ describe WireMockBuilder do
 
   it 'should allow you to specify url when creating mapping' do
     url = "/test"
-    @subject.url_matches(url)
+    @subject.when_url_matches(url)
 
     expect(request_mapping).to match(urlPattern: url)
   end
 
   it 'should allow you to specify url_pattern when creating mapping' do
     url_to_match = "/test/.*"
-    @subject.url_equal_to(url_to_match)
+    @subject.when_url_equal_to(url_to_match)
 
     expect(request_mapping).to match(url: url_to_match)
   end
 
   it 'should allow you to specify body' do
     body = "this is some body"
-    @subject.then_return(body)
+    @subject.then_return_body(body)
 
     expect(response_mapping).to match(body: body)
   end
+
 
   it 'should allow you to specify GET method' do
     @subject.using_get
@@ -68,6 +69,17 @@ describe WireMockBuilder do
     expect { call_url_equal_to }.to raise_exception
   end
 
+  it 'should allow you to specify headers' do
+    name = "header_name"
+    content = "header_content"
+    @subject.with_header(name, content)
+
+    headers = response_mapping[:headers]
+
+    expect(headers[name]).to eq(content)
+  end
+
+
 end
 
 
@@ -84,9 +96,9 @@ def response_mapping
 end
 
 def call_url_equal_to
-  @subject.url_equal_to("/someurl")
+  @subject.when_url_equal_to("/someurl")
 end
 
 def call_url_matches
-  @subject.url_matches("/someurlpattern")
+  @subject.when_url_matches("/someurlpattern")
 end
