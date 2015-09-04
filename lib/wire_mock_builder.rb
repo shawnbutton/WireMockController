@@ -9,7 +9,6 @@ module WireMockBuilder
     }
   end
 
-
   def given_that()
     self
   end
@@ -37,13 +36,15 @@ module WireMockBuilder
   end
 
   def with_header(header, content)
+    headers.merge!(header.to_s => content)
+    self
+  end
+
+  def headers
     unless mapping[:response][:headers]
       mapping[:response].merge!(headers: {})
     end
-
-    mapping[:response][:headers].merge!(header.to_s => content)
-
-    self
+    mapping[:response][:headers]
   end
 
 

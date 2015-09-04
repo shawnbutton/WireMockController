@@ -42,7 +42,6 @@ describe WireMockBuilder do
     expect(response_mapping).to match(body: body)
   end
 
-
   it 'should allow you to specify GET method' do
     @subject.using_get
 
@@ -74,8 +73,6 @@ describe WireMockBuilder do
     content = "header_content"
     @subject.with_header(name, content)
 
-    headers = response_mapping[:headers]
-
     expect(headers[name]).to eq(content)
   end
 
@@ -88,13 +85,9 @@ describe WireMockBuilder do
     @subject.with_header(name_1, content_1).
         with_header(name_2, content_2)
 
-    headers = response_mapping[:headers]
-
     expect(headers[name_1]).to eq(content_1)
     expect(headers[name_2]).to eq(content_2)
-
   end
-
 
 end
 
@@ -118,3 +111,8 @@ end
 def call_url_matches
   @subject.when_url_matches("/someurlpattern")
 end
+
+def headers
+  response_mapping[:headers]
+end
+
