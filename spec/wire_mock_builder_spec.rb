@@ -98,6 +98,19 @@ describe WireMockBuilder do
 
   end
 
+  it 'should allow you to specify multiple request headers' do
+    name_1 = "first_header_name"
+    content_1 = "first_header_content"
+    name_2 = "second_header_name"
+    content_2 = "second_header_content"
+
+    @subject.when_header_equal_to(name_1, content_1).
+        when_header_equal_to(name_2, content_2)
+
+    expect(request_headers[name_1][:equalTo]).to eq(content_1)
+    expect(request_headers[name_2][:equalTo]).to eq(content_2)
+  end
+
 end
 
 def mapping
