@@ -11,8 +11,7 @@ end
 
 def get_mapping(wire_mock_caller)
   mappings = wire_mock_caller.get_mappings
-
-  first_mapping = mappings[0]
+  mappings[0]
 end
 
 describe WireMock, :integration do
