@@ -9,7 +9,7 @@ class WireMockCaller
   end
 
   def get_mappings
-    response = self.class.get("")
+    response = self.class.get("") # get "/__admin" returns mappings
     response["mappings"]
   end
 

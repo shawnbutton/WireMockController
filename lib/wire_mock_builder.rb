@@ -36,15 +36,29 @@ module WireMockBuilder
   end
 
   def with_header(header, content)
-    headers.merge!(header.to_s => content)
+    response_headers.merge!(header.to_s => content)
     self
   end
 
-  def headers
+  def response_headers
     unless mapping[:response][:headers]
       mapping[:response].merge!(headers: {})
     end
     mapping[:response][:headers]
+  end
+
+
+  def when_header_equal_to(header_name, header_content)
+    header_equal_matcher = {equalTo: header_content}
+    request_headers.merge!(header_name.to_s => header_equal_matcher)
+    self
+  end
+
+  def request_headers
+    unless mapping[:request][:headers]
+      mapping[:request].merge!(headers: {})
+    end
+    mapping[:request][:headers]
   end
 
 

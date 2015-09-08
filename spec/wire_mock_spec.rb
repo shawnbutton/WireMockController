@@ -15,14 +15,15 @@ describe WireMock, :integration do
 
     wire_mock_caller = reset_mappings
 
-
-    url = "/testurl"
-    header_name = "header_name"
-    header_content = "header_content"
     subject.using_get.
-        when_url_equal_to(url).
+        when_url_equal_to(url = "/testurl").
+        when_header_equal_to(
+            request_header_name = "request_header",
+            request_header_content = "request_header_content").
         then_return_body("body").
-        with_header(header_name, header_content).
+        with_header(
+            response_header_name = "response_header",
+            response_header_content = "response_header_content").
         create_mapping
 
     mappings = wire_mock_caller.get_mappings
@@ -33,13 +34,17 @@ describe WireMock, :integration do
     expect(request['url']).to eq(url)
     expect(request['method']).to eq("GET")
 
+    request_headers = request['headers']
+    header_equal_to = request_headers[request_header_name]
+    expect(header_equal_to['equalTo']).to eq(request_header_content)
+
     response = first_mapping['response']
     expect(response['status']).to eq(200)
     expect(response['body']).to eq("body")
 
     headers = response['headers']
 
-    expect(headers[header_name]).to eq(header_content)
+    expect(headers[response_header_name]).to eq(response_header_content)
 
   end
 

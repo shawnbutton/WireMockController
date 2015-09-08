@@ -68,15 +68,15 @@ describe WireMockBuilder do
     expect { call_url_equal_to }.to raise_exception
   end
 
-  it 'should allow you to specify one header' do
+  it 'should allow you to specify one return header' do
     name = "header_name"
     content = "header_content"
     @subject.with_header(name, content)
 
-    expect(headers[name]).to eq(content)
+    expect(response_headers[name]).to eq(content)
   end
 
-  it 'should allow you to specify multiple headers' do
+  it 'should allow you to specify multiple return headers' do
     name_1 = "first_header_name"
     content_1 = "first_header_content"
     name_2 = "second_header_name"
@@ -85,12 +85,20 @@ describe WireMockBuilder do
     @subject.with_header(name_1, content_1).
         with_header(name_2, content_2)
 
-    expect(headers[name_1]).to eq(content_1)
-    expect(headers[name_2]).to eq(content_2)
+    expect(response_headers[name_1]).to eq(content_1)
+    expect(response_headers[name_2]).to eq(content_2)
+  end
+
+  it 'should allow you to specify one request header that must be equal to' do
+    name = "header_name"
+    content = "header_content"
+    @subject.when_header_equal_to(name, content)
+
+    expect(request_headers[name][:equalTo]).to eq(content)
+
   end
 
 end
-
 
 def mapping
   @subject.mapping
@@ -112,7 +120,11 @@ def call_url_matches
   @subject.when_url_matches("/someurlpattern")
 end
 
-def headers
+def response_headers
   response_mapping[:headers]
+end
+
+def request_headers
+  request_mapping[:headers]
 end
 
