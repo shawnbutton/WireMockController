@@ -9,10 +9,6 @@ module WireMockBuilder
     }
   end
 
-  def given_that()
-    self
-  end
-
   def using_get
     request_mapping.merge!(method: "GET")
     self
@@ -32,13 +28,13 @@ module WireMockBuilder
 
   def when_header_equal_to(header_name, header_content)
     header_to_equal = {equalTo: header_content}
-    request_headers.merge!(header_name.to_s => header_to_equal)
+    add_request_header(header_name, header_to_equal)
     self
   end
 
   def when_header_matching(header_name, header_content)
     header_to_match = {matches: header_content}
-    request_headers.merge!(header_name.to_s => header_to_match)
+    add_request_header(header_name, header_to_match)
     self
   end
 
@@ -54,6 +50,10 @@ module WireMockBuilder
 
 
   private
+
+  def add_request_header(header_name, header_to_equal)
+    request_headers.merge!(header_name.to_s => header_to_equal)
+  end
 
   def response_headers
     unless mapping[:response][:headers]
