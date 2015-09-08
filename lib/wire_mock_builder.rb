@@ -30,6 +30,18 @@ module WireMockBuilder
     self
   end
 
+  def when_header_equal_to(header_name, header_content)
+    header_to_equal = {equalTo: header_content}
+    request_headers.merge!(header_name.to_s => header_to_equal)
+    self
+  end
+
+  def when_header_matching(header_name, header_content)
+    header_to_match = {matches: header_content}
+    request_headers.merge!(header_name.to_s => header_to_match)
+    self
+  end
+
   def then_return_body(body)
     mapping[:response].merge!(body: body)
     self
@@ -40,18 +52,14 @@ module WireMockBuilder
     self
   end
 
+
+  private
+
   def response_headers
     unless mapping[:response][:headers]
       mapping[:response].merge!(headers: {})
     end
     mapping[:response][:headers]
-  end
-
-
-  def when_header_equal_to(header_name, header_content)
-    header_equal_matcher = {equalTo: header_content}
-    request_headers.merge!(header_name.to_s => header_equal_matcher)
-    self
   end
 
   def request_headers
@@ -60,9 +68,6 @@ module WireMockBuilder
     end
     mapping[:request][:headers]
   end
-
-
-  private
 
   def check_for_url_called_twice
     raise 'should not specify url twice' if @url_set

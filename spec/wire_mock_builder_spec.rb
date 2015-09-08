@@ -111,6 +111,16 @@ describe WireMockBuilder do
     expect(request_headers[name_2][:equalTo]).to eq(content_2)
   end
 
+  it 'should allow you to specify one request header that must be matched' do
+    name = "header_name"
+    content = "header_content"
+    @subject.when_header_matching(name, content)
+
+    expect(request_headers[name][:matches]).to eq(content)
+
+  end
+
+
 end
 
 def mapping
