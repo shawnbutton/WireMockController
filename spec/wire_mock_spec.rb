@@ -23,14 +23,17 @@ describe WireMock, :integration do
     subject.using_get.
         when_url_equal_to(url = "/testurl").
         when_header_equal_to(
-            request_header_equal = "equal",
-            request_header_equal_content = "equal_content").
+            header_equal_name = "equal",
+            header_equal_content = "equal_content").
         when_header_matches(
-            request_header_match = "match",
-            request_header_match_content = "match_content").
+            header_match_name = "match",
+            header_match_content = "match_content").
         when_header_does_not_match(
-            request_header_not_match = "not_match",
-            request_header_not_match_content = "not_matching_content").
+            header_not_match_name = "not_match",
+            header_not_match_content = "not_matching_content").
+        when_header_contains(
+            header_contains_name = "contains",
+            header_contains_content = "contains_content").
         then_return_body("body").
         with_header(
             response_header_name = "response_header",
@@ -45,14 +48,13 @@ describe WireMock, :integration do
 
     request_headers = request['headers']
 
-    header_equal_to = request_headers[request_header_equal]
-    expect(header_equal_to['equalTo']).to eq(request_header_equal_content)
+    expect(request_headers[header_equal_name]['equalTo']).to eq(header_equal_content)
 
-    header_matching = request_headers[request_header_match]
-    expect(header_matching['matches']).to eq(request_header_match_content)
+    expect(request_headers[header_match_name]['matches']).to eq(header_match_content)
 
-    header_not_match = request_headers[request_header_not_match]
-    expect(header_not_match['doesNotMatch']).to eq(request_header_not_match_content)
+    expect(request_headers[header_not_match_name]['doesNotMatch']).to eq(header_not_match_content)
+
+    expect(request_headers[header_contains_name]['contains']).to eq(header_contains_content)
 
     response = mapping['response']
     expect(response['status']).to eq(200)

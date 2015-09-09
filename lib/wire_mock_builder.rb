@@ -27,20 +27,22 @@ module WireMockBuilder
   end
 
   def when_header_equal_to(header_name, header_content)
-    header_to_equal = {equalTo: header_content}
-    add_request_header(header_name, header_to_equal)
+    add_request_header(header_name, {equalTo: header_content})
     self
   end
 
   def when_header_matches(header_name, header_content)
-    header_to_match = {matches: header_content}
-    add_request_header(header_name, header_to_match)
+    add_request_header(header_name, {matches: header_content})
     self
   end
 
   def when_header_does_not_match(header_name, header_content)
-    header_to_not_match = {doesNotMatch: header_content}
-    add_request_header(header_name, header_to_not_match)
+    add_request_header(header_name, {doesNotMatch: header_content})
+    self
+  end
+
+  def when_header_contains(header_name, header_content)
+    add_request_header(header_name, {contains: header_content})
     self
   end
 
@@ -50,7 +52,7 @@ module WireMockBuilder
   end
 
   def with_header(header, content)
-    response_headers.merge!(header.to_s => content)
+    response_headers.merge!(header => content)
     self
   end
 
@@ -58,7 +60,7 @@ module WireMockBuilder
   private
 
   def add_request_header(header_name, header_to_equal)
-    request_headers.merge!(header_name.to_s => header_to_equal)
+    request_headers.merge!(header_name => header_to_equal)
   end
 
   def response_headers
