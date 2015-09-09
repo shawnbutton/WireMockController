@@ -32,9 +32,15 @@ module WireMockBuilder
     self
   end
 
-  def when_header_matching(header_name, header_content)
+  def when_header_matches(header_name, header_content)
     header_to_match = {matches: header_content}
     add_request_header(header_name, header_to_match)
+    self
+  end
+
+  def when_header_does_not_match(header_name, header_content)
+    header_to_not_match = {doesNotMatch: header_content}
+    add_request_header(header_name, header_to_not_match)
     self
   end
 

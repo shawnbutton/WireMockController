@@ -25,9 +25,12 @@ describe WireMock, :integration do
         when_header_equal_to(
             request_header_equal = "equal",
             request_header_equal_content = "equal_content").
-        when_header_matching(
-            request_header_matching = "matching",
-            request_header_matching_content = "matching_content").
+        when_header_matches(
+            request_header_match = "match",
+            request_header_match_content = "match_content").
+        when_header_does_not_match(
+            request_header_not_match = "not_match",
+            request_header_not_match_content = "not_matching_content").
         then_return_body("body").
         with_header(
             response_header_name = "response_header",
@@ -45,8 +48,11 @@ describe WireMock, :integration do
     header_equal_to = request_headers[request_header_equal]
     expect(header_equal_to['equalTo']).to eq(request_header_equal_content)
 
-    header_matching = request_headers[request_header_matching]
-    expect(header_matching['matches']).to eq(request_header_matching_content)
+    header_matching = request_headers[request_header_match]
+    expect(header_matching['matches']).to eq(request_header_match_content)
+
+    header_not_match = request_headers[request_header_not_match]
+    expect(header_not_match['doesNotMatch']).to eq(request_header_not_match_content)
 
     response = mapping['response']
     expect(response['status']).to eq(200)

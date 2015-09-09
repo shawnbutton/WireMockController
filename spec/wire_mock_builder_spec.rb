@@ -114,9 +114,18 @@ describe WireMockBuilder do
   it 'should allow you to specify one request header that must be matched' do
     name = "header_name"
     content = "header_content"
-    @subject.when_header_matching(name, content)
+    @subject.when_header_matches(name, content)
 
     expect(request_headers[name][:matches]).to eq(content)
+
+  end
+
+  it 'should allow you to specify one request header that must NOT be matched' do
+    name = "header_name"
+    content = "header_content"
+    @subject.when_header_does_not_match(name, content)
+
+    expect(request_headers[name][:doesNotMatch]).to eq(content)
 
   end
 
